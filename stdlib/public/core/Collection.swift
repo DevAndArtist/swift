@@ -141,7 +141,6 @@ public protocol IndexableBase {
   /// Returns the position immediately after `i`.
   ///
   /// - Precondition: `(startIndex..<endIndex).contains(i)`
-  @warn_unused_result
   func index(after i: Index) -> Index
 
   /// Replaces `i` with its successor.
@@ -172,7 +171,6 @@ public protocol Indexable : IndexableBase {
   /// - Complexity:
   ///   - O(1) if `Self` conforms to `RandomAccessCollection`.
   ///   - O(`abs(n)`) otherwise.
-  @warn_unused_result
   func index(_ i: Index, offsetBy n: IndexDistance) -> Index
 
   /// Returns the result of advancing `i` by `n` positions, or `nil`
@@ -188,7 +186,6 @@ public protocol Indexable : IndexableBase {
   /// - Complexity:
   ///   - O(1) if `Self` conforms to `RandomAccessCollection`.
   ///   - O(`abs(n)`) otherwise.
-  @warn_unused_result
   func index(
     _ i: Index, offsetBy n: IndexDistance, limitedBy limit: Index
   ) -> Index?
@@ -228,7 +225,6 @@ public protocol Indexable : IndexableBase {
   /// - Complexity:
   ///   - O(1) if `Self` conforms to `RandomAccessCollection`.
   ///   - O(`n`) otherwise, where `n` is the method's result.
-  @warn_unused_result
   func distance(from start: Index, to end: Index) -> IndexDistance
 }
 
@@ -598,7 +594,6 @@ public protocol Collection : Indexable, Sequence {
   ///
   /// - Complexity: O(1)
   /// - SeeAlso: `prefix(through:)`
-  @warn_unused_result
   func prefix(upTo end: Index) -> SubSequence
 
   /// Returns a subsequence from the specified position to the end of the
@@ -624,7 +619,6 @@ public protocol Collection : Indexable, Sequence {
   ///
   /// - Precondition: `start >= self.startIndex && start <= self.endIndex`
   /// - Complexity: O(1)
-  @warn_unused_result
   func suffix(from start: Index) -> SubSequence
 
   /// Returns a subsequence from the start of the collection through the
@@ -645,7 +639,6 @@ public protocol Collection : Indexable, Sequence {
   ///
   /// - Complexity: O(1)
   /// - SeeAlso: `prefix(upTo:)`
-  @warn_unused_result
   func prefix(through position: Index) -> SubSequence
 
   /// A Boolean value indicating whether the collection is empty.
@@ -681,7 +674,6 @@ public protocol Collection : Indexable, Sequence {
   /// otherwise, `nil`.
   ///
   /// - Complexity: O(N).
-  @warn_unused_result
   func _customIndexOfEquatableElement(_ element: Iterator.Element) -> Index??
 
   /// The first element of the collection.
@@ -711,7 +703,6 @@ public protocol Collection : Indexable, Sequence {
   /// - Complexity:
   ///   - O(1) if `Self` conforms to `RandomAccessCollection`.
   ///   - O(`abs(n)`) otherwise.
-  @warn_unused_result
   func index(_ i: Index, offsetBy n: IndexDistance) -> Index
 
   // FIXME: swift-3-indexing-model: Should this mention preconditions on `n`?
@@ -728,7 +719,6 @@ public protocol Collection : Indexable, Sequence {
   /// - Complexity:
   ///   - O(1) if `Self` conforms to `RandomAccessCollection`.
   ///   - O(`abs(n)`) otherwise.
-  @warn_unused_result
   func index(
     _ i: Index, offsetBy n: IndexDistance, limitedBy limit: Index
   ) -> Index?
@@ -740,7 +730,6 @@ public protocol Collection : Indexable, Sequence {
   /// - Complexity:
   ///   - O(1) if `Self` conforms to `RandomAccessCollection`.
   ///   - O(`n`) otherwise, where `n` is the method's result.
-  @warn_unused_result
   func distance(from start: Index, to end: Index) -> IndexDistance
 }
 
@@ -778,13 +767,11 @@ extension Indexable {
       "out of bounds: range begins after bounds.upperBound")
   }
 
-  @warn_unused_result
   public func index(_ i: Index, offsetBy n: IndexDistance) -> Index {
     // FIXME: swift-3-indexing-model: tests.
     return self._advanceForward(i, by: n)
   }
 
-  @warn_unused_result
   public func index(
     _ i: Index, offsetBy n: IndexDistance, limitedBy limit: Index
   ) -> Index? {
@@ -807,7 +794,6 @@ extension Indexable {
     return false
   }
   
-  @warn_unused_result
   public func distance(from start: Index, to end: Index) -> IndexDistance {
     // FIXME: swift-3-indexing-model: tests.
     _precondition(start <= end,
@@ -824,7 +810,6 @@ extension Indexable {
 
   /// Do not use this method directly; call advanced(by: n) instead.
   @inline(__always)
-  @warn_unused_result
   internal func _advanceForward(_ i: Index, by n: IndexDistance) -> Index {
     _precondition(n >= 0,
       "Only BidirectionalCollections can be advanced by a negative amount")
@@ -838,7 +823,6 @@ extension Indexable {
 
   /// Do not use this method directly; call advanced(by: n, limit) instead.
   @inline(__always)
-  @warn_unused_result
   internal
   func _advanceForward(
     _ i: Index, by n: IndexDistance, limitedBy limit: Index
@@ -905,7 +889,6 @@ extension Collection where SubSequence == Self {
   ///   not empty; otherwise, `nil`.
   ///
   /// - Complexity: O(1)
-  @warn_unused_result
   public mutating func popFirst() -> Iterator.Element? {
     guard !isEmpty else { return nil }
     let element = first!
@@ -992,7 +975,6 @@ extension Collection {
   ///   `Optional(Optional(index))` if an element was found.
   ///
   /// - Complexity: O(`count`).
-  @warn_unused_result
   public // dispatching
   func _customIndexOfEquatableElement(_: Iterator.Element) -> Index?? {
     return nil
@@ -1022,7 +1004,6 @@ extension Collection {
   ///   value of the same or of a different type.
   /// - Returns: An array containing the transformed elements of this
   ///   sequence.
-  @warn_unused_result
   public func map<T>(
     _ transform: @noescape (Iterator.Element) throws -> T
   ) rethrows -> [T] {
@@ -1064,7 +1045,6 @@ extension Collection {
   ///
   /// - Complexity: O(*n*), where *n* is the number of elements to drop from
   ///   the beginning of the sequence.
-  @warn_unused_result
   public func dropFirst(_ n: Int) -> SubSequence {
     _precondition(n >= 0, "Can't drop a negative number of elements from a collection")
     let start = index(startIndex,
@@ -1089,7 +1069,6 @@ extension Collection {
   ///   sequence. `n` must be greater than or equal to zero.
   ///
   /// - Complexity: O(*n*), where *n* is the length of the sequence.
-  @warn_unused_result
   public func dropLast(_ n: Int) -> SubSequence {
     _precondition(
       n >= 0, "Can't drop a negative number of elements from a collection")
@@ -1115,7 +1094,6 @@ extension Collection {
   ///   `maxLength` must be greater than or equal to zero.
   /// - Returns: A subsequence starting at the beginning of this sequence
   ///   with at most `maxLength` elements.
-  @warn_unused_result
   public func prefix(_ maxLength: Int) -> SubSequence {
     _precondition(
       maxLength >= 0,
@@ -1144,7 +1122,6 @@ extension Collection {
   ///   at most `maxLength` elements.
   ///
   /// - Complexity: O(*n*), where *n* is the length of the sequence.
-  @warn_unused_result
   public func suffix(_ maxLength: Int) -> SubSequence {
     _precondition(
       maxLength >= 0,
@@ -1180,7 +1157,6 @@ extension Collection {
   /// - Precondition: `end >= self.startIndex && end <= self.endIndex`
   /// - Complexity: O(1)
   /// - SeeAlso: `prefix(through:)`
-  @warn_unused_result
   public func prefix(upTo end: Index) -> SubSequence {
     return self[startIndex..<end]
   }
@@ -1208,7 +1184,6 @@ extension Collection {
   ///
   /// - Precondition: `start >= self.startIndex && start <= self.endIndex`
   /// - Complexity: O(1)
-  @warn_unused_result
   public func suffix(from start: Index) -> SubSequence {
     return self[start..<endIndex]
   }
@@ -1232,7 +1207,6 @@ extension Collection {
   ///
   /// - Complexity: O(1)
   /// - SeeAlso: `prefix(upTo:)`
-  @warn_unused_result
   public func prefix(through position: Index) -> SubSequence {
     return prefix(upTo: index(after: position))
   }
@@ -1281,7 +1255,6 @@ extension Collection {
   ///     returns a Boolean value indicating whether the sequence should be
   ///     split at that element.
   /// - Returns: An array of subsequences, split from this sequence's elements.
-  @warn_unused_result
   public func split(
     maxSplits: Int = Int.max,
     omittingEmptySubsequences: Bool = true,
@@ -1373,7 +1346,6 @@ extension Collection where Iterator.Element : Equatable {
   ///     returns a Boolean value indicating whether the sequence should be
   ///     split at that element.
   /// - Returns: An array of subsequences, split from this sequence's elements.
-  @warn_unused_result
   public func split(
     separator: Iterator.Element,
     maxSplits: Int = Int.max,

@@ -77,7 +77,6 @@ extension RandomAccessIndexable {
   ///
   /// - Complexity:
   ///   - O(1)
-  @warn_unused_result
   public func index(
     _ i: Index, offsetBy n: IndexDistance, limitedBy limit: Index
   ) -> Index? {
@@ -107,7 +106,6 @@ where Index : Strideable,
   /// Returns the position immediately after `i`.
   ///
   /// - Precondition: `(startIndex..<endIndex).contains(i)`
-  @warn_unused_result
   public func index(after i: Index) -> Index {
     return _validityChecked(i.advanced(by: 1))
   }
@@ -121,7 +119,6 @@ where Index : Strideable,
   ///   `index(after: index(before: i)) == i`.
   ///
   /// - Precondition: `i > startIndex && i <= endIndex` 
-  @warn_unused_result
   public func index(before i: Index) -> Index {
     return _validityChecked(i.advanced(by: -1))
   }
@@ -138,7 +135,6 @@ where Index : Strideable,
   ///   - If `n < 0`, `n >= self.distance(from: i, to: self.startIndex)`
   ///
   /// - Complexity: O(1)
-  @warn_unused_result
   public func index(_ i: Index, offsetBy n: Index.Stride) -> Index {
     return _validityChecked(i.advanced(by: n))
   }
@@ -146,7 +142,6 @@ where Index : Strideable,
   /// Returns the distance from `start` to `end`.
   ///
   /// - Complexity: O(1)
-  @warn_unused_result
   public func distance(from start: Index, to end: Index) -> Index.Stride {
     return start.distance(to: end)
   }

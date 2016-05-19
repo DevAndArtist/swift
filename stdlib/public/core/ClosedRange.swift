@@ -177,14 +177,12 @@ public struct CountableClosedRange<
   }
 
   /// Returns the position immediately after `i`.
-  @warn_unused_result
   public func index(after i: Index) -> Index {
     // FIXME: swift-3-indexing-model: range checks and tests.
     return i._successor(upperBound: upperBound)
   }
 
   /// Returns the position immediately preceding `i`.
-  @warn_unused_result
   public func index(before i: Index) -> Index {
     // FIXME: swift-3-indexing-model: range checks and tests.
     return i._predecessor(upperBound: upperBound)
@@ -227,7 +225,6 @@ public struct CountableClosedRange<
     self.upperBound = bounds.upper
   }
 
-  @warn_unused_result
   public func _customContainsEquatableElement(_ element: Bound) -> Bool? {
     return element >= self.lowerBound && element <= self.upperBound
   }
@@ -275,7 +272,6 @@ public struct ClosedRange<
 
   /// Returns `true` iff `element` is between `lowerBound` and `upperBound` or
   /// equal to either bound.
-  @warn_unused_result
   public func contains(_ element: Bound) -> Bool {
     return element >= self.lowerBound && element <= self.upperBound
   }
@@ -290,7 +286,6 @@ public struct ClosedRange<
 ///
 /// - Precondition: `minimum <= maximum`.
 @_transparent
-@warn_unused_result
 public func ... <Bound : Comparable> (minimum: Bound, maximum: Bound)
   -> ClosedRange<Bound> {
   _precondition(
@@ -302,7 +297,6 @@ public func ... <Bound : Comparable> (minimum: Bound, maximum: Bound)
 ///
 /// - Precondition: `minimum <= maximum`.
 @_transparent
-@warn_unused_result
 public func ... <
   // WORKAROUND rdar://25214598 - should be just Bound : Strideable
   Bound : protocol<_Strideable, Comparable>

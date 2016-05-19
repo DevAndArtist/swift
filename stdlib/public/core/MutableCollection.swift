@@ -154,7 +154,6 @@ public protocol MutableIndexable : Indexable {
   /// `Index` values.
   ///
   /// - Precondition: `i` has a well-defined successor.
-  @warn_unused_result
   func index(after i: Index) -> Index
 
   func formIndex(after i: inout Index)

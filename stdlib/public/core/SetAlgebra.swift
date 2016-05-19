@@ -89,7 +89,6 @@ public protocol SetAlgebra : Equatable, ArrayLiteralConvertible {
   ///
   /// - Parameter member: An element to look for in the set.
   /// - Returns: `true` if `member` exists in the set; otherwise, `false`.
-  @warn_unused_result
   func contains(_ member: Element) -> Bool
 
   /// Returns a new set with the elements of both this and the given set.
@@ -116,7 +115,6 @@ public protocol SetAlgebra : Equatable, ArrayLiteralConvertible {
   /// - Note: if this set and `other` contain elements that are equal but
   ///   distinguishable (e.g. via `===`), which of these elements is present
   ///   in the result is unspecified.
-  @warn_unused_result
   func union(_ other: Self) -> Self
   
   /// Returns a new set with the elements that are common to both this set and
@@ -136,7 +134,6 @@ public protocol SetAlgebra : Equatable, ArrayLiteralConvertible {
   /// - Note: if this set and `other` contain elements that are equal but
   ///   distinguishable (e.g. via `===`), which of these elements is present
   ///   in the result is unspecified.
-  @warn_unused_result
   func intersection(_ other: Self) -> Self
 
   /// Returns a new set with the elements that are either in this set or in the
@@ -152,7 +149,6 @@ public protocol SetAlgebra : Equatable, ArrayLiteralConvertible {
   ///
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: A new set.
-  @warn_unused_result
   func symmetricDifference(_ other: Self) -> Self
 
   /// If `newMember` is not already contained in `self`, inserts it.
@@ -279,7 +275,6 @@ public protocol SetAlgebra : Equatable, ArrayLiteralConvertible {
   ///
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: A new set.
-  @warn_unused_result
   func subtracting(_ other: Self) -> Self
 
   /// Returns a Boolean value that indicates whether the set is a subset of
@@ -295,7 +290,6 @@ public protocol SetAlgebra : Equatable, ArrayLiteralConvertible {
   ///
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: `true` if the set is a subset of `other`; otherwise, `false`.
-  @warn_unused_result
   func isSubset(of other: Self) -> Bool
 
   /// Returns a Boolean value that indicates whether the set has no members in
@@ -311,7 +305,6 @@ public protocol SetAlgebra : Equatable, ArrayLiteralConvertible {
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: `true` if the set has no elements in common with `other`;
   ///   otherwise, `false`.
-  @warn_unused_result
   func isDisjoint(with other: Self) -> Bool
 
   /// Returns a Boolean value that indicates whether the set is a superset of
@@ -328,7 +321,6 @@ public protocol SetAlgebra : Equatable, ArrayLiteralConvertible {
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: `true` if the set is a superset of `possibleSubset`;
   ///   otherwise, `false`.
-  @warn_unused_result
   func isSuperset(of other: Self) -> Bool
 
   /// A Boolean value that indicates whether the set has no elements.
@@ -434,7 +426,6 @@ extension SetAlgebra {
   ///
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: `true` if the set is a subset of `other`; otherwise, `false`.
-  @warn_unused_result
   public func isSubset(of other: Self) -> Bool {
     return self.intersection(other) == self
   }
@@ -453,7 +444,6 @@ extension SetAlgebra {
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: `true` if the set is a superset of `other`; otherwise,
   ///   `false`.
-  @warn_unused_result
   public func isSuperset(of other: Self) -> Bool {
     return other.isSubset(of: self)
   }
@@ -471,7 +461,6 @@ extension SetAlgebra {
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: `true` if the set has no elements in common with `other`;
   ///   otherwise, `false`.
-  @warn_unused_result
   public func isDisjoint(with other: Self) -> Bool {
     return self.intersection(other).isEmpty
   }
@@ -489,7 +478,6 @@ extension SetAlgebra {
   ///
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: A new set.
-  @warn_unused_result
   public func subtracting(_ other: Self) -> Self {
     return self.intersection(self.symmetricDifference(other))
   }
@@ -516,7 +504,6 @@ extension SetAlgebra {
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: `true` if the set is a strict superset of `other`; otherwise,
   ///   `false`.
-  @warn_unused_result
   public func isStrictSuperset(of other: Self) -> Bool {
     return self.isSuperset(of: other) && self != other
   }
@@ -540,7 +527,6 @@ extension SetAlgebra {
   /// - Parameter other: A set of the same type as the current set.
   /// - Returns: `true` if the set is a strict subset of `other`; otherwise,
   ///   `false`.
-  @warn_unused_result
   public func isStrictSubset(of other: Self) -> Bool {
     return other.isStrictSuperset(of: self)
   }

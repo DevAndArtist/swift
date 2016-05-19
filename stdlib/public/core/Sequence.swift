@@ -206,7 +206,6 @@ public protocol IteratorProtocol {
   ///
   /// - Returns: The next element in the underlying sequence if a next element
   ///   exists; otherwise, `nil`.
-  @warn_unused_result
   mutating func next() -> Element?
 }
 
@@ -349,7 +348,6 @@ public protocol Sequence {
   // repeatedly slicing them in a loop.
 
   /// Returns an iterator over the elements of this sequence.
-  @warn_unused_result
   func makeIterator() -> Iterator
 
   /// A value less than or equal to the number of elements in
@@ -375,7 +373,6 @@ public protocol Sequence {
   ///   value of the same or of a different type.
   /// - Returns: An array containing the transformed elements of this
   ///   sequence.
-  @warn_unused_result
   func map<T>(
     _ transform: @noescape (Iterator.Element) throws -> T
   ) rethrows -> [T]
@@ -395,7 +392,6 @@ public protocol Sequence {
   ///   sequence as its argument and returns a Boolean value indicating
   ///   whether the element should be included in the returned array.
   /// - Returns: An array of the elements that `includeElement` allowed.
-  @warn_unused_result
   func filter(
     _ includeElement: @noescape (Iterator.Element) throws -> Bool
   ) rethrows -> [Iterator.Element]
@@ -450,7 +446,6 @@ public protocol Sequence {
   ///
   /// - Complexity: O(*n*), where *n* is the number of elements to drop from
   ///   the beginning of the sequence.
-  @warn_unused_result
   func dropFirst(_ n: Int) -> SubSequence
 
   /// Returns a subsequence containing all but the specified number of final
@@ -470,7 +465,6 @@ public protocol Sequence {
   ///   sequence. `n` must be greater than or equal to zero.
   ///
   /// - Complexity: O(*n*), where *n* is the length of the sequence.
-  @warn_unused_result
   func dropLast(_ n: Int) -> SubSequence
 
   /// Returns a subsequence, up to the specified maximum length, containing
@@ -489,7 +483,6 @@ public protocol Sequence {
   ///   `maxLength` must be greater than or equal to zero.
   /// - Returns: A subsequence starting at the beginning of this sequence
   ///   with at most `maxLength` elements.
-  @warn_unused_result
   func prefix(_ maxLength: Int) -> SubSequence
 
   /// Returns a subsequence, up to the given maximum length, containing the
@@ -511,7 +504,6 @@ public protocol Sequence {
   ///   at most `maxLength` elements.
   ///
   /// - Complexity: O(*n*), where *n* is the length of the sequence.
-  @warn_unused_result
   func suffix(_ maxLength: Int) -> SubSequence
 
   /// Returns the longest possible subsequences of the sequence, in order, that
@@ -558,7 +550,6 @@ public protocol Sequence {
   ///   - isSeparator: A closure that returns `true` if its argument should be
   ///     used to split the sequence; otherwise, `false`.
   /// - Returns: An array of subsequences, split from this sequence's elements.
-  @warn_unused_result
   func split(
     maxSplits: Int, omittingEmptySubsequences: Bool,
     isSeparator: @noescape (Iterator.Element) throws -> Bool
@@ -575,7 +566,6 @@ public protocol Sequence {
     where: @noescape (Iterator.Element) throws -> Bool
   ) rethrows -> Iterator.Element?
 
-  @warn_unused_result
   func _customContainsEquatableElement(
     _ element: Iterator.Element
   ) -> Bool?
@@ -720,7 +710,6 @@ extension Sequence {
   ///   value of the same or of a different type.
   /// - Returns: An array containing the transformed elements of this
   ///   sequence.
-  @warn_unused_result
   public func map<T>(
     _ transform: @noescape (Iterator.Element) throws -> T
   ) rethrows -> [T] {
@@ -756,7 +745,6 @@ extension Sequence {
   ///   sequence as its argument and returns a Boolean value indicating
   ///   whether the element should be included in the returned array.
   /// - Returns: An array of the elements that `includeElement` allowed.
-  @warn_unused_result
   public func filter(
     _ includeElement: @noescape (Iterator.Element) throws -> Bool
   ) rethrows -> [Iterator.Element] {
@@ -790,7 +778,6 @@ extension Sequence {
   /// - Parameter maxLength: The maximum number of elements to return. Must be
   ///   greater than or equal to zero.
   /// - Complexity: O(*n*), where *n* is the length of the sequence.
-  @warn_unused_result
   public func suffix(_ maxLength: Int) -> AnySequence<Iterator.Element> {
     _precondition(maxLength >= 0, "Can't take a suffix of negative length from a sequence")
     if maxLength == 0 { return AnySequence([]) }
@@ -863,7 +850,6 @@ extension Sequence {
   ///   - isSeparator: A closure that returns `true` if its argument should be
   ///     used to split the sequence; otherwise, `false`.
   /// - Returns: An array of subsequences, split from this sequence's elements.
-  @warn_unused_result
   public func split(
     maxSplits: Int = Int.max,
     omittingEmptySubsequences: Bool = true,
@@ -925,7 +911,6 @@ extension Sequence {
     return nil
   }
 
-  @warn_unused_result
   public func _customContainsEquatableElement(
     _ element: Iterator.Element
   ) -> Bool? {
@@ -1041,7 +1026,6 @@ extension Sequence where Iterator.Element : Equatable {
   ///     start or end of the sequence. If `true`, only nonempty subsequences
   ///     are returned. The default value is `true`.
   /// - Returns: An array of subsequences, split from this sequence's elements.
-  @warn_unused_result
   public func split(
     separator: Iterator.Element,
     maxSplits: Int = Int.max,
@@ -1078,7 +1062,6 @@ extension Sequence where
   ///
   /// - Complexity: O(*n*), where *n* is the number of elements to drop from
   ///   the beginning of the sequence.
-  @warn_unused_result
   public func dropFirst(_ n: Int) -> AnySequence<Iterator.Element> {
     _precondition(n >= 0, "Can't drop a negative number of elements from a sequence")
     if n == 0 { return AnySequence(self) }
@@ -1101,7 +1084,6 @@ extension Sequence where
   /// - Parameter n: The number of elements to drop off the end of the
   ///   sequence. `n` must be greater than or equal to zero.
   /// - Complexity: O(*n*), where *n* is the length of the sequence.
-  @warn_unused_result
   public func dropLast(_ n: Int) -> AnySequence<Iterator.Element> {
     _precondition(n >= 0, "Can't drop a negative number of elements from a sequence")
     if n == 0 { return AnySequence(self) }
@@ -1146,7 +1128,6 @@ extension Sequence where
   ///   with at most `maxLength` elements.
   ///
   /// - Complexity: O(1)
-  @warn_unused_result
   public func prefix(_ maxLength: Int) -> AnySequence<Iterator.Element> {
     _precondition(maxLength >= 0, "Can't take a prefix of negative length from a sequence")
     if maxLength == 0 {
@@ -1168,7 +1149,6 @@ extension Sequence {
   ///     // Prints "[2, 3, 4, 5]"
   ///
   /// - Complexity: O(1)
-  @warn_unused_result
   public func dropFirst() -> SubSequence { return dropFirst(1) }
 
   /// Returns a subsequence containing all but the last element of the sequence.
@@ -1180,7 +1160,6 @@ extension Sequence {
   ///     // Prints "[1, 2, 3, 4]"
   ///
   /// - Complexity: O(*n*), where *n* is the length of the sequence.
-  @warn_unused_result
   public func dropLast() -> SubSequence  { return dropLast(1) }
 }
 

@@ -197,7 +197,6 @@ public protocol RawRepresentable {
 ///   - rhs: A second raw-representable instance.
 /// - Returns: `true` if the two operands have equal raw values; otherwise,
 ///   `false`.
-@warn_unused_result
 public func == <
   T : RawRepresentable where T.RawValue : Equatable
 >(lhs: T, rhs: T) -> Bool {
@@ -211,7 +210,6 @@ public func == <
 ///   - rhs: A second raw-representable instance.
 /// - Returns: `true` if the two operands have unequal raw values; otherwise,
 ///   `false`.
-@warn_unused_result
 public func != <
   T : RawRepresentable where T.RawValue : Equatable
 >(lhs: T, rhs: T) -> Bool {
@@ -227,7 +225,6 @@ public func != <
 ///   - rhs: A second raw-representable instance.
 /// - Returns: `true` if the two operands have unequal raw values; otherwise,
 ///   `false`.
-@warn_unused_result
 public func != <
   T : Equatable where T : RawRepresentable, T.RawValue : Equatable
 >(lhs: T, rhs: T) -> Bool {
